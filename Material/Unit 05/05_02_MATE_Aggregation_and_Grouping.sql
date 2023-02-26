@@ -49,4 +49,45 @@ select salesman_id, max(pur_amt), ord_date from orders where year(ord_date) = 20
 -- Show only  the results where the maximum purchase exceeds 5000.
 select ord_date, customer_id, max(pur_amt) from orders group by customer_id having max(pur_amt) > 5000;
 
---
+--13.- Find the maximum purchase amount for each customer each day. 
+-- Show only  the results where the maximum purchase is between 3000 and 7000. 
+
+select ord_date, customer_id, max(pur_amt) from orders group by customer_id having max(pur_amt) between 3000 and 7000 ;
+
+--14.- Find the maximum purchase amount for each customer each day. 
+-- Show only  the results where the maximum purchase is either 10000, 8700 or 1500. 
+select ord_date, customer_id, max(pur_amt) from orders group by customer_id having max(pur_amt) =1 0000 or max(pur_amt) = 8700 or max(pur_amt) = 15000;
+
+--15.- Find the maximum purchase amount for each customer each day. 
+--Show only  the results where the customer_id is between 250 and 450. 
+select customer_id, ord_date, max(pur_amt) from orders group by customer_id, ord_date having customer_id between 250 and 450;
+
+--16.- Find the maximum order for each customer for customers with id between 200 and 400. 
+--Show only the results where the maximum order is higher than 9000. Return customer id and maximum purchase amount.
+SELECT customer_id, MAX(pur_amt)
+FROM orders
+WHERE customer_id BETWEEN 250 AND 450
+GROUP BY customer_id
+HAVING MAX(pur_amt) > 9000;
+
+-- 17.- Find the maximum order for each salesman for salesmen with id between 15 and 40. 
+-- Return salesperson id and maximum purchase amount.
+select salesman_id, max(pur_amt)
+from orders
+where salesman_id between 15 and 40
+group by salesman_id;
+
+-- 18.- Count the orders on 2020-03-25.
+select count(ord_no)
+from orders
+where ord_date = '2020-03-25';
+
+--19.- Count the number of salesmen that have a city (City is not null).
+select count(salesman_id)
+from salesman
+where city is not null;
+
+--20.- List the number of orders for each salesperson and date.
+select ord_date, salesman_id, count(ord_no) as count_of_orders
+from orders
+group by ord_date, salesman_id;
