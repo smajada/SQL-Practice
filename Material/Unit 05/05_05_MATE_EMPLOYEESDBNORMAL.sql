@@ -1,3 +1,66 @@
+-- 1. Display the number of employees in each department. Use GROUP BY to group by department. 
+select count(employees.num), departments.name from employees, departments group by departments.name;
+
+--2. For each occupation obtain the average salary. 
+select avg(salary), occu_code from employees group by occu_code;
+
+-- 3. Display the departments with more than 5 employees. Use GROUP BY to group by department and HAVING to establish the condition on the groups. 
+select count(employees.name), departments.name from employees, departments where dept_num = departments.num group by dept_num;
+
+-- 4. Find the average wages of each department (use the function avg and GROUP BY).
+select avg(salary), departments.name from employees, departments where dept_num = departments.num group by dept_num;
+
+-- 5. Display the surname of the salesmen of the 'SALES' department. 
+select surname from employees, departments where departments.name = 'sales' and  dept_num = departments.num;
+
+--6. Display the sum of salaries of the 'SALES' department. 
+select sum(salary) from employees, departments where departments.name = 'sales' and  dept_num = departments.num;
+
+--7. Display the count of employees with occupation “EMPLOYEE” in every department (show the name of the department). 
+select count(employees.name) num_empl, departments.name from employees, departments where dept_num = departments.num and occu_code = 'EMP' group by dept_num;
+
+
+--8. Show the number of different occupations in each department. 
+select count(occu_code), departments.name from employees, departments where dept_num = departments.num group by dept_num;
+
+--9. Show departments that have more than two people working in the same occupation. 
+select count(occu_code), departments.name from employees, departments where dept_num = departments.num group by departments.name having count(occu_code) > 2;
+
+--10. Displays a query that is the union between the table OCCUPATIONS and TOWNS.
+(select * from occupations) union (select * from towns);
+
+--11. Do the same query as in exercise 10 but order the results by name. 
+(select * from occupations) union (select * from towns) order by name;
+
+--12. Select the occupation names of all the employees of the department with name ‘RESEARCH’ 
+--and do the union of this query with the selection of the occupation names of the employees of the 
+--department with name ‘SALES’. Use the union operator. 
+select name from ((select occupations.name, occupations.code 
+from occupations, employees, departments 
+where dept_num = departments.num and departments.name = 'sales') 
+union 
+(select occupations.name, occu_code 
+from employees, departments, occupations 
+where dept_num = departments.num and departments.name = 'research' and code = occu_code)) new_table ;
+
+select occupations.name, employees.name from occupations, employees where occu_code=occupations.code and occupations.name='research';
+
+--13. Repeat the last query showing the repeated results (union all).
+
+--14. Display the number of sellers in the 'SALES' department. 
+
+--15. Display the surnames and occupations of the employees of the 'SALES' department. 
+
+--16. Display the number of employees for each occupation of the 'SALES' department. 
+
+--17. Display the number of employees of each department whose profession is "EMPLOYEE".
+
+--18. Display the department names and the count of employees working into them. 
+
+--19. Display the maximum number of employees of all the departments. In other words, find the maximum value of the column showing the maximum number of employees in the previous exercise. (clue: you need exercise 18 as a subquery and you should use MAX function). 
+
+--20. Show the departments whose average salary is greater than the average of salaries of all employees. 
+
 -- 21. Display the name of the department with more employees 
 -- and its number of employees. Option 1: combine “having” and 
 -- a subselect. In case of a tie, this option will show all the 
@@ -78,3 +141,5 @@ WHERE
             AND EMPLOYEES.occu_code = OCCUPATIONS.code
             AND DEPARTMENTS.name = 'SALES'
     );
+--24. Display the number of employee and occupation name of the employees of the 'SALES' department. 
+
