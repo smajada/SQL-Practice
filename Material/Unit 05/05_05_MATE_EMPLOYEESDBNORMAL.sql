@@ -43,23 +43,111 @@ union
 from employees, departments, occupations 
 where dept_num = departments.num and departments.name = 'research' and code = occu_code)) new_table ;
 
-select occupations.name, employees.name from occupations, employees where occu_code=occupations.code and occupations.name='research';
-
 --13. Repeat the last query showing the repeated results (union all).
 
+
 --14. Display the number of sellers in the 'SALES' department. 
+SELECT
+    count(surname)
+FROM
+    employees,
+    occupations,
+    departments
+WHERE
+    occu_code = occupations.code
+    AND dept_num = departments.num
+    AND occupations.name = 'SALESMAN'
+    AND departments.name = 'SALES';
 
 --15. Display the surnames and occupations of the employees of the 'SALES' department. 
+SELECT
+    surname, occupations.name
+FROM
+    employees,
+    occupations,
+    departments
+WHERE
+    occu_code = occupations.code
+    AND dept_num = departments.num
+    AND occupations.name = 'SALESMAN'
+    AND departments.name = 'SALES';
 
 --16. Display the number of employees for each occupation of the 'SALES' department. 
+SELECT
+    count(surname), occupations.name
+FROM
+    employees,
+    occupations,
+    departments
+WHERE
+    occu_code = occupations.code
+    AND dept_num = departments.num
+    AND departments.name = 'SALES'
+group by 
+occupations.name;
 
 --17. Display the number of employees of each department whose profession is "EMPLOYEE".
+SELECT
+    departments.name, count(surname) no_employees
+FROM
+    employees,
+    occupations,
+    departments
+WHERE
+    occu_code = occupations.code
+    AND dept_num = departments.num
+    AND occupations.name = 'EMPLOYEE'
+group by 
+departments.name;
 
 --18. Display the department names and the count of employees working into them. 
+SELECT
+    departments.name, count(surname) no_employees
+FROM
+    employees,
+    occupations,
+    departments
+WHERE
+    occu_code = occupations.code
+    AND dept_num = departments.num
+group by 
+departments.name;
 
---19. Display the maximum number of employees of all the departments. In other words, find the maximum value of the column showing the maximum number of employees in the previous exercise. (clue: you need exercise 18 as a subquery and you should use MAX function). 
+--19. Display the maximum number of employees of all the departments. 
+--In other words, find the maximum value of the column showing the maximum number 
+--of employees in the previous exercise. 
+--(clue: you need exercise 18 as a subquery and you should use MAX function). 
+select max(num_employees) 
+from (SELECT
+    departments.name, count(surname) num_employees
+FROM
+    employees,
+    occupations,
+    departments
+WHERE
+    occu_code = occupations.code
+    AND dept_num = departments.num
+group by 
+departments.name) as temp_query;
 
 --20. Show the departments whose average salary is greater than the average of salaries of all employees. 
+SELECT
+    departments.name,
+    avg(salary)
+FROM
+    employees,
+    departments
+WHERE
+    departments.num = dept_num
+GROUP BY
+    departments.name
+HAVING
+    avg(salary) > (
+        SELECT
+            avg(salary)
+        FROM
+            employees
+    );
 
 -- 21. Display the name of the department with more employees 
 -- and its number of employees. Option 1: combine “having” and 
@@ -142,4 +230,10 @@ WHERE
             AND DEPARTMENTS.name = 'SALES'
     );
 --24. Display the number of employee and occupation name of the employees of the 'SALES' department. 
+select employees.num, occupations.name
+from employees, occupations, departments
+where
+employees.occu_code = occupations.code
+and departments.num = employees.dept_num
+and departments.name = 'SALES';
 
