@@ -46,7 +46,6 @@ INTERSECT
         AND gender = 'female'
         AND pizza = 'pepperoni'
 );
-
 ----------------------------------------------------
 select name
 from Person

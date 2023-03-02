@@ -11,11 +11,23 @@ select count(employees.name), departments.name from employees, departments where
 select avg(salary), departments.name from employees, departments where dept_num = departments.num group by dept_num;
 
 -- 5. Display the surname of the salesmen of the 'SALES' department. 
-select surname from employees, departments where departments.name = 'sales' and  dept_num = departments.num;
-
+SELECT
+    surname
+FROM
+    employees,
+    departments
+WHERE
+    departments.name = 'sales'
+    AND dept_num = departments.num;
 --6. Display the sum of salaries of the 'SALES' department. 
-select sum(salary) from employees, departments where departments.name = 'sales' and  dept_num = departments.num;
-
+SELECT
+    sum(salary)
+FROM
+    employees,
+    departments
+WHERE
+    departments.name = 'sales'
+    AND dept_num = departments.num;
 --7. Display the count of employees with occupation “EMPLOYEE” in every department (show the name of the department). 
 select count(employees.name) num_empl, departments.name from employees, departments where dept_num = departments.num and occu_code = 'EMP' group by dept_num;
 
@@ -35,16 +47,51 @@ select count(occu_code), departments.name from employees, departments where dept
 --12. Select the occupation names of all the employees of the department with name ‘RESEARCH’ 
 --and do the union of this query with the selection of the occupation names of the employees of the 
 --department with name ‘SALES’. Use the union operator. 
-select name from ((select occupations.name, occupations.code 
-from occupations, employees, departments 
-where dept_num = departments.num and departments.name = 'sales') 
-union 
-(select occupations.name, occu_code 
-from employees, departments, occupations 
-where dept_num = departments.num and departments.name = 'research' and code = occu_code)) new_table ;
+SELECT
+    occupations.name
+FROM
+    occupations,
+    departments,
+    employees
+WHERE
+    occupations.code = employees.occu_code
+    AND departments.num = employees.dept_num
+    AND departments.name = 'RESEARCH'
+UNION
+SELECT
+    occupations.name
+FROM
+    occupations,
+    departments,
+    employees
+WHERE
+    occupations.code = employees.occu_code
+    AND departments.num = employees.dept_num
+    AND departments.name = 'SALES';
 
 --13. Repeat the last query showing the repeated results (union all).
-
+SELECT
+    occupations.name
+FROM
+    occupations,
+    departments,
+    employees
+WHERE
+    occupations.code = employees.occu_code
+    AND departments.num = employees.dept_num
+    AND departments.name = 'RESEARCH'
+UNION
+ALL
+SELECT
+    occupations.name
+FROM
+    occupations,
+    departments,
+    employees
+WHERE
+    occupations.code = employees.occu_code
+    AND departments.num = employees.dept_num
+    AND departments.name = 'SALES';
 
 --14. Display the number of sellers in the 'SALES' department. 
 SELECT
