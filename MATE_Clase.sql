@@ -113,8 +113,10 @@ SELECT
 FROM
     professional_skills
 WHERE
-    accomplishment LIKE '%10\%' ----------------------------- 23/01/2023 -----------------------------
-    -- Select the first character starting from the end of the name column
+    accomplishment LIKE '%10\%' 
+    
+----------------------------- 23/01/2023 -----------------------------
+-- Select the first character starting from the end of the name column
 SELECT
     substring(name, -1)
 FROM
@@ -414,6 +416,7 @@ WHERE
     d1.budget < d2.budget;
 
 ----------------------------- 16/02/2023 -----------------------------
+
 WITH my_alias(max_budget) AS (
     SELECT
         max(budget) max_budget
@@ -448,6 +451,8 @@ avg_table(avg_column) AS (
     FROM
         total_salary
 )
+
+
 SELECT
     dept_name,
     sum_salary
@@ -478,7 +483,9 @@ SELECT
             department.dept_name = instructor.dept_name
     ) AS num_instructors
 FROM
-    department --- Find the number of instructors in every building
+    department 
+    
+--- Find the number of instructors in every building
 SELECT
     building,
     count(*) AS num_instructors
